@@ -6,7 +6,7 @@ async function postPredictHandler(request, h) {
   const { image } = request.payload;
   const { model } = request.server.app;
  
-  const { confidenceScore, label, explanation, suggestion } = await predictClassification(model, image);
+  const {label, suggestion } = await predictClassification(model, image);
   const id = crypto.randomUUID();
   const createdAt = new Date().toISOString();
  
@@ -21,7 +21,7 @@ async function postPredictHandler(request, h) {
  
   const response = h.response({
     status: 'success',
-    message: 'Model is predicted successfully.',
+    message: 'Model is predicted successfully',
     data
   })
   response.code(201);
@@ -32,7 +32,7 @@ const { Firestore } = require('@google-cloud/firestore');
 
 async function getHistoriesHandler(request, h) {
   try {
-    const db = new Firestore({ keyFilename: 'service account.json' });
+    const db = new Firestore({ keyFilename: 'service_account.json' });
 
     // Ambil semua data dari koleksi 'predictions'
     const predictionsRef = db.collection('predictions');
