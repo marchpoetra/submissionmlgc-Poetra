@@ -7,12 +7,15 @@ const InputError = require('../exceptions/InputError');
  
 (async () => {
     const server = Hapi.server({
-        port: 8080,
+        port: 3000,
         host: '0.0.0.0',
         routes: {
             cors: {
               origin: ['*'],
             },
+            payload:{
+                maxBytes: 1000000,
+            }
         },
     });
  
@@ -36,7 +39,7 @@ const InputError = require('../exceptions/InputError');
         if (response.isBoom) {
             const newResponse = h.response({
                 status: 'fail',
-                message: response.message
+                message: "Payload content length greater than maximum allowed: 1000000",
             })
             newResponse.code(response.output.statusCode);
             return newResponse;
